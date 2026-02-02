@@ -1,7 +1,7 @@
 import { useAuth } from "../auth/use-auth";
 import { useNavigate } from "react-router-dom";
 
-export default function Dashboard() {
+export default function AdminPanel() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -12,8 +12,8 @@ export default function Dashboard() {
 
   return (
     <div>
-      <h1>Dashboard</h1>
-      <p>Welcome, {user?.name}</p>
+      <h1>Admin Panel</h1>
+      <p>Welcome, {user?.name} ({user?.role})</p>
       <button onClick={handleLogout}>Logout</button>
     </div>
   );
