@@ -1,28 +1,33 @@
-import ProtectedRoute from "../auth/ProtectedRoute";
-import Dashboard from "../pages/Dashboard";
-import AdminPanel from "../pages/AdminPanel";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import Dashboard from "../pages/Dashboard";
+import AdminPanel from "../pages/AdminPanel";
+import ProtectedRoute from "../auth/ProtectedRoute";
+import AppLayout from "../layouts/AppLayout";
 
 export const router = createBrowserRouter([
   { path: "/", element: <Navigate to="/login" replace /> },
   { path: "/login", element: <Login /> },
   { path: "/register", element: <Register /> },
+
   {
     path: "/dashboard",
     element: (
       <ProtectedRoute>
-        <Dashboard />
+        <AppLayout />
       </ProtectedRoute>
     ),
-  },
-  {
-    path: "/admin",
-    element: (
-      <ProtectedRoute allowedRoles={["admin"]}>
-        <AdminPanel />
-      </ProtectedRoute>
-    ),
+    children: [
+      { path: "/dashboard", element: <Dashboard /> },
+      {
+        path: "/admin",
+        element: (
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <AdminPanel />
+          </ProtectedRoute>
+        ),
+      },
+    ],
   },
 ]);
